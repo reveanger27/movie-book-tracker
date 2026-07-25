@@ -44,8 +44,8 @@ Tabel utama di Supabase:
 
 1. Clone repo ini
    ```bash
-   git clone https://github.com/username-kamu/nama-repo.git
-   cd nama-repo
+git clone https://github.com/reveanger27/movie-book-tracker.git
+cd movie-book-tracker
    ```
 
 2. Install dependencies
