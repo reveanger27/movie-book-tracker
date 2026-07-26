@@ -67,16 +67,17 @@ function ItemDetail() {
     if(!confirmDelete) return;
 
     //hapus cover dari database
-    const fileName = items.cover_url.split('/').pop();
-    const { error: storageError} = await supabase.storage
-    .from('item-covers')
-    .remove([fileName]);
+    if (items.cover_url) {
+      const fileName = items.cover_url.split('/').pop();
+      const { error: storageError} = await supabase.storage
+      .from('item-covers')
+      .remove([fileName]);
 
-    if (storageError) {
-      console.error(storageError);
-      //lanjut walo gagal hapus cover, gk perlu stop total
+      if (storageError) {
+        console.error(storageError);
+        //lanjut walo gagal hapus cover, gk perlu stop total
+      }
     }
-
     const { error: genreDeleteError } = await supabase
     .from('item_genres')
     .delete()
@@ -147,9 +148,11 @@ function ItemDetail() {
   return (
   <div className="min-h-screen bg-slate-950 p-6">
     <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-8">
-      <img src={items.cover_url} alt={items.title} 
-        className="w-full md:w-72 h-auto rounded-lg shadow-xl shrink-0"
-      />
+      {items.cover_url && (
+        <img src={items.cover_url} alt={items.title} 
+          className="w-full md:w-72 h-auto rounded-lg shadow-xl shrink-0"
+        />
+      )}
       <div className="flex-1 text-stone-200">
         <h1 className="text-3xl font-serif font-bold text-amber-100 mb-4">{items.title}</h1>
         <p>Tipe: {items.type}</p>

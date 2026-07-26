@@ -1,12 +1,18 @@
 function StarRating({rating}) {
     return (
-        <span className="text-amber-400">
-            {[1, 2, 3, 4, 5].map((star) => (
-                <span key={star}>
-                    {star <= rating ? '★' : '☆' }
+        <div>
+            { rating ? (
+                <span className="text-amber-400">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                        <span key={star}>
+                            {star <= rating ? '★' : '☆' }
+                        </span>
+                    ))}
                 </span>
-            ))}
-        </span>
+            ) : (
+                <span>Belum ada rating</span>
+            )}
+       </div>
     )
 }
 

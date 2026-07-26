@@ -35,7 +35,8 @@ function ItemForm() {
     setError('');
     setLoading(true);
 
-    let coverUrl = cover;
+    let coverUrl = cover || null;
+    let ratingItem = rating || null;
 
     if (cover instanceof File) {
       // STEP 1: Upload cover
@@ -67,7 +68,7 @@ function ItemForm() {
         .update({
           type,
           title,
-          rating,
+          rating: ratingItem,
           creator,
           status,
           cover_url: coverUrl,
@@ -90,7 +91,7 @@ function ItemForm() {
           type,
           title,
           user_id: currentUser.id,
-          rating,
+          rating: ratingItem,
           creator,
           status,
           cover_url: coverUrl,

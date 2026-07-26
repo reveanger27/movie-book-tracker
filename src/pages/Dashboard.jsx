@@ -25,7 +25,7 @@ function Dashboard () {
             [currentUser]
     );
 
-    const safeItems = items || []; // biar .filter() gak error pas data masih null
+    const safeItems = items || []; // biar .filter() gak error pas data masih nul
     const getGenreNames = (item) => 
         item.item_genres?.map((ig) => ig.genres.name) || [];
 
@@ -74,11 +74,13 @@ function Dashboard () {
                             key={item.id}
                             className="group bg-slate-800 rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
                         >
-                            <img
-                                src={item.cover_url}
-                                alt={item.title}
-                                className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
-                            />
+                            {item.cover_url && (
+                                <img
+                                    src={item.cover_url}
+                                    alt={item.title}
+                                    className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+                                />
+                            )}
                             <div className="p-4 border-t-2 border-dashed border-slate-600">
                                 <Link to={`/item/${item.id}`}>
                                     <h3 className="text-lg font-serif font-semibold text-amber-100 mb-1">{item.title}</h3>
