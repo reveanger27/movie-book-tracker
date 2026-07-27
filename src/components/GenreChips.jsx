@@ -1,10 +1,18 @@
 import { useSearchParams } from "react-router-dom";
+import useSupabaseQuery from "../hooks/useSupabaseQuery";
+import { supabase } from "../lib/supabaseClient";
 
-const GENRES = ["Action", "Thriller", "Romance", "Comedy", "Horror", "Drama", "Fantasy", "Non-Fiction", "Mistery", "Sci-Fi"];
 
 function GenreChips () {
     const [searchParams, setSearchParams] = useSearchParams();
     const activeGenre = searchParams.get("genre") || "";
+
+    const { data: allGenres, loading: genresLoading } = useSupabaseQuery(
+        () => supabase.from('genres').select('*'),
+        []
+    );
+
+    let genreChip = allGenres || [];
 
     const handleClick = (genre) => {
         const params = Object.fromEntries(searchParams);
@@ -18,17 +26,17 @@ function GenreChips () {
 
     return (
         <div className="flex gap-2 flex-wrap">
-            {GENRES.map((genre) => (
+            {genreChip.map((genre) => (
                 <button
-                key={genre}
-                onClick={() => handleClick(genre)}
+                key={genre.id}
+                onClick={() => handleClick(genre.name)}
                 className={`px-3 py-1 rounded-full text-sm ${
-                    activeGenre === genre
+                    activeGenre === genre.name
                     ? "bg-stone-200 text-stone-900"
                     : "bg-stone-800 text-stone-400"
                 }`}
                 >
-                {genre}
+                {genre.name}
                 </button>
             ))}
         </div>

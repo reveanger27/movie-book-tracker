@@ -1,4 +1,4 @@
-import { Link, useNavigate, useSearchParams} from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
 import { useAuth } from "../context/authContext";
 import { useState } from "react";
@@ -10,9 +10,14 @@ function Navbar() {
     const  keyword = searchParams.get("search") || "";
     const {currentUser} = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleSearch = (e) => {
         const value = e.target.value;
+            if(location.pathname !== '/') {
+                navigate('/?search=' + value)
+                return;
+            } 
         setSearchParams(value ? { search: value } : {});
     };
 
